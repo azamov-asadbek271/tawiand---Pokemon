@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="./src/output.css">
 </head>
 
-<body class="flex justify-center items-center w-full h-dvh bg-slate-300  ">
+<body class="flex justify-center items-center w-full h-dvh bg-slate-300  relative ">
 <div class="card-container  w-1/2 flex flex-col items-center">
         <div class="card-container-box  w-96 flex flex-col items-center relative  overflow-y-hidden mb-5 bg-white rounded-md">
 
@@ -18,7 +18,10 @@
     <button class="btn btn-lg btn-neutral uppercase"> generate</button>
 </div>
 
-   
+   <div class="overlay  top-0 left-0 bottom-0 fixed w-full flex justify-center items-center z-50 hidden-box">
+    
+    <span class="loading loading-dots loading-lg text-white "></span>
+   </div>
     <script src="/app.js"></script>
 </body>
 

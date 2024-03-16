@@ -2,6 +2,17 @@ const API = "https://pokeapi.co/api/v2/pokemon/";
 const container = document.querySelector(".card-container-box");
 const btn = document.querySelector(".btn")
 
+let overlay = document.querySelector(".overlay")
+
+function domOverlay (data) {
+   if(data) {
+    overlay.classList.add(".hidden-box");
+   } else {
+    overlay.classList.remove(".hidden-box");
+      
+   }
+}
+
 function upDataUI (pokemon) {
       container.innerHTML = `
             <div class="round"></div>
@@ -23,18 +34,27 @@ function upDataUI (pokemon) {
 
 number = Math.trunc(Math.random() * 1000) + 1;
 
-function getData (api) {
-    fetch(api)
-      .then((data) => data.json())
-      .then((data) => upDataUI(data))
-      .catch((err) => console.log(err));
+  async function getData  (api) {
+    let req = await fetch(api)
+    let data = req.json()
+    return data
 }
+// function getData (api) {
+//     fetch(api)
+//       .then((data) => data.json())
+//       .then((data) => upDataUI(data))
+//       .catch((err) => console.log(err));
+// }
 getData(API + number)
+      .then((data) => upDataUI(data))
+      .catch((error) => console.log(error));
 btn.addEventListener("click",() => {
 
 number = Math.trunc(Math.random() * 1000)+1;
 const API = "https://pokeapi.co/api/v2/pokemon/" + number;
 
 getData(API)
+  .then((data) => upDataUI(data))
+  .catch((err) => console.log(err));
   
 })
