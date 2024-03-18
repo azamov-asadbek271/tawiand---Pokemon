@@ -1,25 +1,31 @@
 const API = "https://pokeapi.co/api/v2/pokemon/";
 const container = document.querySelector(".card-container-box");
-const btn = document.querySelector(".btn")
+const btn = document.querySelector(".btn");
 
-let overlay = document.querySelector(".overlay")
+let overlay = document.querySelector(".overlay");
 
-function domOverlay (data) {
-   if(data) {
-    overlay.classList.add(".hidden-box");
-   } else {
-    overlay.classList.remove(".hidden-box");
-      
-   }
+function domOverlay(data) {
+  if (data) {
+    overlay.classList.remove("hidden-box");
+  } else {
+    overlay.classList.add("hidden-box");
+  }
 }
 
-function upDataUI (pokemon) {
-      container.innerHTML = `
+function upDataUI(pokemon) {
+  container.innerHTML = `
             <div class="round"></div>
-            <p class="hp z-10 absolute right-10 top-3.5 w-14 bg-white rounded-xl flex items-center justify-center"> HP ${pokemon.stats[0].base_stat}</p>
-            <img class="w-56 h-56 z-20 mt-12 mb-4" src="${pokemon.sprites.other.dream_world.front_default ?? pokemon.sprites.front_default}" alt="">
+            <p class="hp z-10 absolute right-10 top-3.5 w-14 bg-white rounded-xl flex items-center justify-center"> HP ${
+              pokemon.stats[0].base_stat
+            }</p>
+            <img class="w-56 h-56 z-20 mt-12 mb-4" src="${
+              pokemon.sprites.other.dream_world.front_default ??
+              pokemon.sprites.front_default
+            }" alt="">
             <h2 class="mb-4 font-semibold">${pokemon.name}</h2>
-            <p class=" px-3.5 text-white py-1 bg-orange-500 flex items-center justify-center   rounded-xl mb-4">${pokemon.types[0].type.name}</p>
+            <p class=" px-3.5 text-white py-1 bg-orange-500 flex items-center justify-center   rounded-xl mb-4">${
+              pokemon.types[0].type.name
+            }</p>
             <div class="card-box flex justify-between w-full px-4">
                 <p> ${pokemon.stats[1].base_stat}  <br> attack </p>
                 <p> ${pokemon.stats[2].base_stat} <br>defense</p>
@@ -27,17 +33,18 @@ function upDataUI (pokemon) {
             </div>
             
    `;
-  
-  
-  
 }
 
 number = Math.trunc(Math.random() * 1000) + 1;
 
-  async function getData  (api) {
-    let req = await fetch(api)
-    let data = req.json()
-    return data
+async function getData(api) {
+  domOverlay(true);
+  let req = await fetch(api);
+
+  let data = req.json();
+  domOverlay(false);
+
+  return data;
 }
 // function getData (api) {
 //     fetch(api)
@@ -46,15 +53,13 @@ number = Math.trunc(Math.random() * 1000) + 1;
 //       .catch((err) => console.log(err));
 // }
 getData(API + number)
-      .then((data) => upDataUI(data))
-      .catch((error) => console.log(error));
-btn.addEventListener("click",() => {
-
-number = Math.trunc(Math.random() * 1000)+1;
-const API = "https://pokeapi.co/api/v2/pokemon/" + number;
-
-getData(API)
   .then((data) => upDataUI(data))
-  .catch((err) => console.log(err));
-  
-})
+  .catch((error) => console.log(error));
+btn.addEventListener("click", () => {
+  number = Math.trunc(Math.random() * 1000) + 1;
+  const API = "https://pokeapi.co/api/v2/pokemon/" + number;
+
+  getData(API)
+    .then((data) => upDataUI(data))
+    .catch((err) => console.log(err));
+});
